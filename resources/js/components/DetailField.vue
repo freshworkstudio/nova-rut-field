@@ -4,16 +4,18 @@
 
 <script>
   import { rutFormat } from 'rut-helpers'
+  import RutMixin from '../RutMixin'
 
   export default {
     props: ['resource', 'resourceName', 'resourceId', 'field'],
+    mixins: [RutMixin],
     data () {
       return {
         edited_field: null
       }
     },
     mounted () {
-      this.field.value = rutFormat(this.field.value)
+      this.field.value = this.doFormat(this.field.value)
       this.edited_field = this.field
     }
   }

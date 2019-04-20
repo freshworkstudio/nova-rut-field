@@ -284,18 +284,21 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rut_helpers__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rut_helpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rut_helpers__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RutMixin__ = __webpack_require__(14);
 //
 //
 //
 //
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['resourceName', 'field'],
+  mixins: [__WEBPACK_IMPORTED_MODULE_1__RutMixin__["a" /* default */]],
   methods: {
     rutFormat: function rutFormat(val) {
-      return Object(__WEBPACK_IMPORTED_MODULE_0_rut_helpers__["rutFormat"])(val);
+      return this.doFormat(val) || '';
     }
   }
 });
@@ -375,22 +378,25 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rut_helpers__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rut_helpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rut_helpers__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RutMixin__ = __webpack_require__(14);
 //
 //
 //
 //
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['resource', 'resourceName', 'resourceId', 'field'],
+  mixins: [__WEBPACK_IMPORTED_MODULE_1__RutMixin__["a" /* default */]],
   data: function data() {
     return {
       edited_field: null
     };
   },
   mounted: function mounted() {
-    this.field.value = Object(__WEBPACK_IMPORTED_MODULE_0_rut_helpers__["rutFormat"])(this.field.value);
+    this.field.value = this.doFormat(this.field.value);
     this.edited_field = this.field;
   }
 });
@@ -474,6 +480,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_nova___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_nova__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rut_helpers__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rut_helpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rut_helpers__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__RutMixin__ = __webpack_require__(14);
 //
 //
 //
@@ -492,47 +499,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [__WEBPACK_IMPORTED_MODULE_0_laravel_nova__["FormField"], __WEBPACK_IMPORTED_MODULE_0_laravel_nova__["HandlesValidationErrors"]],
+  mixins: [__WEBPACK_IMPORTED_MODULE_0_laravel_nova__["FormField"], __WEBPACK_IMPORTED_MODULE_0_laravel_nova__["HandlesValidationErrors"], __WEBPACK_IMPORTED_MODULE_2__RutMixin__["a" /* default */]],
 
   props: ['resourceName', 'resourceId', 'field'],
 
-  computed: {
-    eventListener: function eventListener() {
-      if (this.field.formatOn) return this.field.formatOn;
-      return 'keyup';
-    },
-    saveNormalized: function saveNormalized() {
-      if (this.field.saveNormalized) return this.field.saveNormalized == true;
-      return true;
-    },
-    format: function format() {
-      // 0 -> COMPLETE
-      // 1 -> ESCAPED
-      // 2 -> WITH DASH
-
-      if (this.field.format) return this.field.format;
-      return 0; // COMPLETE
-    }
-  },
-
   methods: {
-    doFormat: function doFormat(value) {
-      if (this.format === 2) {
-        // WITH DASH
-        return Object(__WEBPACK_IMPORTED_MODULE_1_rut_helpers__["rutFormat"])(value).split('.').join('');
-      }
-      if (this.format === 1) {
-        // ESCAPED
-        return Object(__WEBPACK_IMPORTED_MODULE_1_rut_helpers__["rutFormat"])(value).split('.').join('').split('-').join('');
-      }
-      return Object(__WEBPACK_IMPORTED_MODULE_1_rut_helpers__["rutFormat"])(value);
-    },
-
     /*
      * Set the initial, internal value for the field.
      */
@@ -10768,6 +10745,50 @@ module.exports = g;
 
 /***/ })
 /******/ ]);
+});
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rut_helpers__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rut_helpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rut_helpers__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  methods: {
+    doFormat: function doFormat(value) {
+      if (this.format === 2) {
+        // WITH DASH
+        return Object(__WEBPACK_IMPORTED_MODULE_0_rut_helpers__["rutFormat"])(value).split('.').join('');
+      }
+      if (this.format === 1) {
+        // ESCAPED
+        return Object(__WEBPACK_IMPORTED_MODULE_0_rut_helpers__["rutFormat"])(value).split('.').join('').split('-').join('');
+      }
+      return Object(__WEBPACK_IMPORTED_MODULE_0_rut_helpers__["rutFormat"])(value);
+    }
+  },
+  computed: {
+    eventListener: function eventListener() {
+      if (this.field.formatOn) return this.field.formatOn;
+      return 'keyup';
+    },
+    saveNormalized: function saveNormalized() {
+      if (this.field.saveNormalized) return this.field.saveNormalized == true;
+      return true;
+    },
+    format: function format() {
+      // 0 -> COMPLETE
+      // 1 -> ESCAPED
+      // 2 -> WITH DASH
+
+      if (this.field.format) return this.field.format;
+      return 0; // COMPLETE
+    }
+  }
+
 });
 
 /***/ })
